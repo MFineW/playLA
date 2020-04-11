@@ -35,6 +35,12 @@ class Vector:
     def __rmul__(self, k):
         return self * k
 
+    def dot(self, other):
+        """向量点乘"""
+        assert len(self) == len(other), \
+            "Error in dot product. Length of vectors must be same"
+        return sum(a * b for a, b in zip(self, other))
+
     def __truediv__(self, k):
         return (1 / k) * self
 
