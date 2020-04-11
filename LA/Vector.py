@@ -1,7 +1,23 @@
+import math
+from ._global import EPSILON
+
+
 class Vector:
 
     def __init__(self, lst):
         self._values = list(lst)
+
+    @classmethod
+    def zero(cls, dim):
+        return cls([0] * dim)
+
+    def norm(self):
+        return math.sqrt(sum(e ** 2 for e in self))
+
+    def normalize(self):
+        if self.norm() < EPSILON:
+            raise ZeroDivisionError("Normalize error! norm is zero.")
+        return Vector(self._values) / self.norm()
 
     def __add__(self, other):
         assert len(self) == len(other), \
@@ -19,11 +35,14 @@ class Vector:
     def __rmul__(self, k):
         return self * k
 
+    def __truediv__(self, k):
+        return (1 / k) * self
+
     def __pos__(self):
-        return 1*self
+        return 1 * self
 
     def __neg__(self):
-        return -1*self
+        return -1 * self
 
     def __iter__(self):
         return self._values.__iter__()
